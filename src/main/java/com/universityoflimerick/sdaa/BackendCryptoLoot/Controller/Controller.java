@@ -1,6 +1,8 @@
-package com.universityoflimerick.sdaa.BackendCryptoLoot;
+package com.universityoflimerick.sdaa.BackendCryptoLoot.Controller;
 
 import com.google.gson.Gson;
+import com.universityoflimerick.sdaa.BackendCryptoLoot.Repositories.UserProfileRepository;
+import com.universityoflimerick.sdaa.BackendCryptoLoot.Models.UserProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;

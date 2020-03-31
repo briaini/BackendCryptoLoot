@@ -1,14 +1,11 @@
-package com.universityoflimerick.sdaa.BackendCryptoLoot;
+package com.universityoflimerick.sdaa.BackendCryptoLoot.Config;
 
-import org.springframework.context.annotation.Bean;
+import com.universityoflimerick.sdaa.BackendCryptoLoot.Filters.JWTAuthorizationFilter;
+import com.universityoflimerick.sdaa.BackendCryptoLoot.Filters.LoggingFilter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
