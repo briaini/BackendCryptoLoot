@@ -16,7 +16,7 @@ public class LoggingFilter extends OncePerRequestFilter {
         System.out.println(httpServletRequest.toString());
 
         try {
-            File file = new File("FILENAME");
+            File file = new File("log.txt");
             if (file.createNewFile()) {
                 System.out.println("File created: " + file.getName());
             } else {
@@ -27,7 +27,7 @@ public class LoggingFilter extends OncePerRequestFilter {
             e.printStackTrace();
         }
         try {
-            FileWriter myWriter = new FileWriter("FILENAME");
+            FileWriter myWriter = new FileWriter("log.txt");
             myWriter.write(httpServletRequest.toString());
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
