@@ -1,6 +1,8 @@
-package com.universityoflimerick.sdaa.BackendCryptoLoot;
+package com.universityoflimerick.sdaa.BackendCryptoLoot.Controller;
 
 import com.google.gson.Gson;
+import com.universityoflimerick.sdaa.BackendCryptoLoot.Repositories.UserProfileRepository;
+import com.universityoflimerick.sdaa.BackendCryptoLoot.Models.UserProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +24,7 @@ public class Controller {
     public Map<String, String> getProfileInfo() {
         if (userProfileRepository.findBySub((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).isPresent()) {
             UserProfile profile = userProfileRepository.findBySub((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).get();
-            Map map = new HashMap();
+            Map<String, String> map = new HashMap<>();
             map.put("name", profile.getName());
             return map;
         } else {
@@ -35,11 +37,10 @@ public class Controller {
     String saveProfileInfo(@RequestBody String body) {
         if (userProfileRepository.findBySub((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).isPresent()) {
             System.out.println("user exists:\n" + body + "\n");
-            UserProfile userProfile = userProfileRepository.findBySub((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).get();
 
+            UserProfile userProfile = userProfileRepository.findBySub((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).get();
             Gson gson = new Gson();
             UserProfile tempUserProfile = gson.fromJson(body, UserProfile.class);
-
             userProfile.setName(tempUserProfile.getName());
 
             userProfileRepository.save(userProfile);

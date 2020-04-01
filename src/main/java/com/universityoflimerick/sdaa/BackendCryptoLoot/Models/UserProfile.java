@@ -1,4 +1,4 @@
-package com.universityoflimerick.sdaa.BackendCryptoLoot;
+package com.universityoflimerick.sdaa.BackendCryptoLoot.Models;
 
 import javax.persistence.*;
 
