@@ -2,6 +2,7 @@ package com.universityoflimerick.sdaa.BackendCryptoLoot.Config;
 
 import com.universityoflimerick.sdaa.BackendCryptoLoot.Filters.JWTAuthorizationFilter;
 import com.universityoflimerick.sdaa.BackendCryptoLoot.Filters.LoggingFilter;
+import com.universityoflimerick.sdaa.BackendCryptoLoot.Filters.MyInterceptorFilter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -20,6 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilterBefore(new LoggingFilter(), JWTAuthorizationFilter.class)
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()))
+                .addFilterAfter(new MyInterceptorFilter(), JWTAuthorizationFilter.class)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 }
