@@ -13,11 +13,9 @@ public class BackendCryptoLootApplication {
 		SpringApplication.run(BackendCryptoLootApplication.class, args);
 
 		RequestInterceptor myInterceptor = context -> {
-			System.out.print("i have intercepted your request: " + context.toString());
-//				context.setPort (8080);
-//				System.out.println("onPreMarshalRequest() " + context.getPort());
+			System.out.print("intercepted your request: " + context.toString());
+			//do something with context object
 		};
-
 		rd.registerRequestInterceptor(myInterceptor);
 	}
 }

@@ -5,9 +5,9 @@ import java.util.Vector;
 
 public class RequestDispatcher implements RequestInterceptor {
     private static RequestDispatcher singletonInstance = new RequestDispatcher();
-    static Vector myInterceptors;
+    static Vector<RequestInterceptor> myInterceptors;
     private RequestDispatcher(){
-        myInterceptors = new Vector();
+        myInterceptors = new Vector<>();
     }
 
     public static RequestDispatcher getRequestDispatcher() {
@@ -15,10 +15,6 @@ public class RequestDispatcher implements RequestInterceptor {
     }
 
     synchronized public void registerRequestInterceptor(RequestInterceptor i) {
-        if(myInterceptors == null)
-            System.out.println("interceptors_ is null");
-        if(i == null)
-            System.out.println("RequestInterceptor i is null");
         myInterceptors.addElement (i);
     }
     synchronized public void removeRequestInterceptor(RequestInterceptor i) {
@@ -26,18 +22,19 @@ public class RequestDispatcher implements RequestInterceptor {
     }
 
     public void onPreMarshalRequest(HttpServletRequest context) {
-        Vector interceptors;
+        Vector<RequestInterceptor> interceptors;
         synchronized (this) { // Clone vector.
             interceptors = (Vector) myInterceptors.clone();
         }
         for (int i = 0; i < interceptors.size(); ++i) {
             RequestInterceptor ic = (RequestInterceptor) interceptors.elementAt(i);
-            // Dispatch callback hook method.
             ic.onPreMarshalRequest(context);
         }
     }
+ }
 
-    //    public void dispatchClientRequestInterceptorPreMarshall(UnmarshalledRequest context) {
+
+//    public void dispatchClientRequestInterceptorPreMarshall(UnmarshalledRequest context) {
 //        Vector interceptors;
 //        synchronized (this) { // Clone vector.
 //            interceptors = (Vector) interceptors_.clone();
@@ -48,5 +45,4 @@ public class RequestDispatcher implements RequestInterceptor {
 //            ic.onPreMarshalRequest(context);
 //        }
 //    }
-    //...
- }
+//...
