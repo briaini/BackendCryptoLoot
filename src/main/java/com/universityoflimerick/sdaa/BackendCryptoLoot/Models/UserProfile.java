@@ -10,6 +10,12 @@ public class UserProfile {
     Integer id;
     String sub;
     String name;
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Feedback feedback;
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private BankAccount bankAccount;
 
     public UserProfile() {
     }
