@@ -35,7 +35,6 @@ public class LoggingFilter extends OncePerRequestFilter {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 }

@@ -1,6 +1,5 @@
 package com.universityoflimerick.sdaa.BackendCryptoLoot.Config;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Vector;
 
 public class RequestDispatcher implements RequestInterceptor {
@@ -21,28 +20,14 @@ public class RequestDispatcher implements RequestInterceptor {
         myInterceptors.removeElement (i);
     }
 
-    public void onPreMarshalRequest(HttpServletRequest context) {
+    public void onPreMarshalRequest(ContextObject context) {
         Vector<RequestInterceptor> interceptors;
-        synchronized (this) { // Clone vector.
+        synchronized (this) {
             interceptors = (Vector) myInterceptors.clone();
         }
         for (int i = 0; i < interceptors.size(); ++i) {
-            RequestInterceptor ic = (RequestInterceptor) interceptors.elementAt(i);
+            RequestInterceptor ic = interceptors.elementAt(i);
             ic.onPreMarshalRequest(context);
         }
     }
  }
-
-
-//    public void dispatchClientRequestInterceptorPreMarshall(UnmarshalledRequest context) {
-//        Vector interceptors;
-//        synchronized (this) { // Clone vector.
-//            interceptors = (Vector) interceptors_.clone();
-//        }
-//        for (int i = 0; i < interceptors.size(); ++i) {
-//            RequestInterceptor ic = (RequestInterceptor) interceptors.elementAt(i);
-//            // Dispatch callback hook method.
-//            ic.onPreMarshalRequest(context);
-//        }
-//    }
-//...

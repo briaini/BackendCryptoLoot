@@ -19,7 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilterBefore(new LoggingFilter(), JWTAuthorizationFilter.class)
+//                .addFilterBefore(new LoggingFilter(), JWTAuthorizationFilter.class)
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()))
                 .addFilterAfter(new MyInterceptorFilter(), JWTAuthorizationFilter.class)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

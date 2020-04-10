@@ -24,17 +24,13 @@ import java.util.ArrayList;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
-    public static final String SECRET = "SecretKeyToGenJWTs";
-    public static final long EXPIRATION_TIME = 864_000_000; // 10 days
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String HEADER_STRING = "Authorization";
-    public static final String SIGN_UP_URL = "/users/sign-up";
 
     public JWTAuthorizationFilter(AuthenticationManager authManager) {
         super(authManager);
     }
 
-    //execute method
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -67,6 +63,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
                     .build();
             System.out.println("---------------------");
             System.out.println(jwt.getClaim("sub").asString());
+            verifier.verify(token);
 
             return new UsernamePasswordAuthenticationToken(jwt.getClaim("sub").asString(), null, new ArrayList<>());
 

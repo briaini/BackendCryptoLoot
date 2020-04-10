@@ -36,7 +36,6 @@ public class Controller {
     public @ResponseBody
     String saveProfileInfo(@RequestBody String body) {
         if (userProfileRepository.findBySub((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).isPresent()) {
-            System.out.println("user exists:\n" + body + "\n");
 
             UserProfile userProfile = userProfileRepository.findBySub((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).get();
             Gson gson = new Gson();
@@ -44,7 +43,6 @@ public class Controller {
             userProfile.setName(tempUserProfile.getName());
 
             userProfileRepository.save(userProfile);
-            System.out.println("User Profile Updated");
 
             return ("User Profile Updated");
         } else {
@@ -52,12 +50,7 @@ public class Controller {
             UserProfile userProfile = gson.fromJson(body, UserProfile.class);
             userProfile.setSub((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 
-            System.out.println(userProfile.getName());
-            System.out.println(userProfile.getSub());
-
             userProfileRepository.save(userProfile);
-            System.out.println("User Profile Saved For First Time");
-
             return ("User Profile Saved For First Time");
         }
     }
