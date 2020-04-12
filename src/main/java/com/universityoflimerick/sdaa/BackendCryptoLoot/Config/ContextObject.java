@@ -21,6 +21,11 @@ public class ContextObject {
     boolean authenticated;
     String headers = "";
 
+    /**
+     * ContextObject provides information about server and specific request
+     * instantiated per requeset
+     * @param serverInfo contains info about server
+     */
     public ContextObject(String serverInfo) {
         this.serverInfo = serverInfo;
         user = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();

@@ -22,6 +22,12 @@ import java.security.interfaces.RSAPublicKey;
 public class BackendCryptoLootApplication {
     public static RequestDispatcher rd = RequestDispatcher.getRequestDispatcher();
 
+    /**
+     * main runs backend application and creates concrete interceptor
+     * interceptor can retrieve server information from context object
+     * logs request if user is not an admin
+     * @param args
+     */
     public static void main(String[] args) {
         SpringApplication.run(BackendCryptoLootApplication.class, args);
 

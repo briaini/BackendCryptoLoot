@@ -29,6 +29,11 @@ public class Controller {
         return "hello";
     }
 
+    /**
+     * purchaseCoin simulates user purchase of coins from USD
+     * @param body contains amount of coin user wishes to purchase
+     * @return string result depending on if user has sufficient funds and feedback to purchase coin
+     */
     @PostMapping(path = "/purchase")
     public String purchaseCoin(@RequestBody String body) {
         String result = "";
@@ -46,7 +51,10 @@ public class Controller {
         return result;
     }
 
-
+    /**
+     * getProfileInfo returns profile data, user retrieved using jwt passed to endpoint
+     * @return profile data
+     */
     @GetMapping(path = "/profile")
     public Map<String, String> getProfileInfo() {
         if (userProfileRepository.findBySub((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).isPresent()) {
@@ -59,11 +67,16 @@ public class Controller {
         }
     }
 
-    @PostMapping(path = "/userdetails") // Map ONLY POST Requests
+    /**
+     * saveProfileInfo allows user to save profile into
+     * @param body profile data
+     * @return string signifying successful update, should just use http status
+     */
+    @PostMapping(path = "/userdetails")
     public @ResponseBody
     String saveProfileInfo(@RequestBody String body) {
+        //if user has saved data, need to update
         if (userProfileRepository.findBySub((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).isPresent()) {
-
             UserProfile userProfile = userProfileRepository.findBySub((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).get();
             Gson gson = new Gson();
             UserProfile tempUserProfile = gson.fromJson(body, UserProfile.class);
@@ -72,6 +85,8 @@ public class Controller {
             userProfileRepository.save(userProfile);
 
             return ("User Profile Updated");
+
+        //else we need to create data
         } else {
             Gson gson = new Gson();
             UserProfile userProfile = gson.fromJson(body, UserProfile.class);

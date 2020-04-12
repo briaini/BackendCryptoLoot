@@ -16,9 +16,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class MyInterceptorFilter extends OncePerRequestFilter {
+    /**
+     * used to notify dispatcher of event
+     * @param httpServletRequest
+     * @param httpServletResponse
+     * @param filterChain
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) {
-
         ContextObject contextObj = new ContextObject(httpServletRequest.getSession().getServletContext().getServerInfo());
         contextObj.setHeaders(httpServletRequest.getHeader("Authorization"));
 

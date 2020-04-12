@@ -31,6 +31,17 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         super(authManager);
     }
 
+    /**
+     * doFilterInternal takes in http request. Checks if contains JWT in header
+     * if no JWT, passes onwards to chain
+     * else calls getAuthentication and stores result in UsernamePasswordAuthenticationToken
+     * UsernamePasswordAuthenticationToken object stored in SecurityContextHolder using setAuthentication method
+     * @param request
+     * @param response
+     * @param chain
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -48,6 +59,15 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         chain.doFilter(request, response);
     }
 
+    /**
+     * UsernamePasswordAuthenticationToken validates JWT
+     * takes JWT from header and removes "Bearer "
+     * Gets JWK from OAuth provider
+     * uses public key in JWK to check signature and ensure JWT unaltered
+     * if signature valid, ensures JWT was issued by our OAuth provider
+     * @param request http request
+     * @return UsernamePasswordAuthenticationToken if valid JWT
+     */
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
         String token = request.getHeader(HEADER_STRING).substring(7);
 
@@ -61,8 +81,8 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             JWTVerifier verifier = JWT.require(algorithm)
                     .withIssuer("https://dev-4d3z8kfx.eu.auth0.com/")
                     .build();
-            System.out.println("---------------------");
-            System.out.println(jwt.getClaim("sub").asString());
+//            System.out.println("---------------------");
+//            System.out.println(jwt.getClaim("sub").asString());
             verifier.verify(token);
 
             return new UsernamePasswordAuthenticationToken(jwt.getClaim("sub").asString(), null, new ArrayList<>());

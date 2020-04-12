@@ -3,16 +3,30 @@ package com.universityoflimerick.sdaa.BackendCryptoLoot.Models;
 import com.universityoflimerick.sdaa.BackendCryptoLoot.Repositories.BankApiRepository;
 import com.universityoflimerick.sdaa.BackendCryptoLoot.Repositories.FeedBackRepository;
 
+/**
+ * CryptoMarketFacade used to simplify purchasing coin
+ */
 public class CryptoMarketFacade {
     FeedBackRepository feedBackRepository;
     //Fake Bank API
     BankApiRepository bankApiRepository;
 
+    /**
+     * sets instance variables with autowired repositories
+     * @param feedBackRepository
+     * @param bankApiRepository
+     */
     public CryptoMarketFacade(FeedBackRepository feedBackRepository, BankApiRepository bankApiRepository) {
         this.feedBackRepository = feedBackRepository;
         this.bankApiRepository = bankApiRepository;
     }
 
+    /**
+     * purchaseCoin
+     * @param user contains user details
+     * @param amount amount in USD of coin user wishes to purchase
+     * @return string result depending on if user has sufficient funds and feedback to purchase coin
+     */
     public String purchaseCoin(UserProfile user, float amount) {
         Integer userId = user.getId();
         Feedback feedback = null;

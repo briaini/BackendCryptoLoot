@@ -11,6 +11,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class LoggingFilter extends OncePerRequestFilter {
+    /**
+     * doFilterInternal Spring filter can be used to log request
+     * @param httpServletRequest
+     * @param httpServletResponse
+     * @param filterChain
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         System.out.println(httpServletRequest.toString());
